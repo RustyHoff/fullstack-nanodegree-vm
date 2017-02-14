@@ -42,7 +42,7 @@ class webserverHanlder(BaseHTTPRequestHandler):
 
                 output = ""
                 output += "<head><body>"
-                output += '''<form method='POST' enctype='multipart/form-data' action='/restaurants'><h2>Create a New Restaurant</h2><input name="newRestaurant" type="text" placeholder="Restaurant Name"><input type="submit" value="Create"></form>'''
+                output += '''<form method='POST' enctype='multipart/form-data' action='/restaurants/new'><h2>Create a New Restaurant</h2><input name="newRestaurant" type="text" placeholder="Restaurant Name"><input type="submit" value="Create"></form>'''
                 output += "</head></body>"
 
 
@@ -56,43 +56,24 @@ class webserverHanlder(BaseHTTPRequestHandler):
 
     def do_POST(self):
         try:
-            self.send_response(301)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            ctype, pdict = cgi.parse_header(
-                self.headers.getheader('content-type'))
-            if ctype == 'multipart/form-data':
-                fields = cgi.parse_multipart(self.rfile, pdict)
-                restaurantName = fields.get('newRestaurant')
-            addRestaurant = Restaurant(name = restaurantName[0])
+            if self.path.endswith("/restaurants/new") or self.path.endswith("/restaurants/new/"):
+                ctype, pdict = cgi.parse_header(
+                    self.headers.getheader('content-type'))
+                if ctype == 'multipart/form-data':
+                    fields = cgi.parse_multipart(self.rfile, pdict)
+                    restaurantName = fields.get('newRestaurant')
+                addRestaurant = Restaurant(name = restaurantName[0])
 
-            session.add(addRestaurant)
-            session.commit()
+                session.add(addRestaurant)
+                session.commit()
+                print "Adding Restaurant..."
 
-    # Clone /restaurants
-            restaurants = session.query(Restaurant).all()
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
+                self.send_response(301)
+                self.send_header('Content-type', 'text/html')
+                self.send_header('Location', '/restaurants')
+                self.end_headers()
+                print 'New restaurant, "%s", added to database!' % restaurantName[0]
 
-            output = ""
-            output += "<html><body>"
-            output += "<a href='restaurants/new'>Add another restaurant</a>"
-            output += "<br><br><br>"
-            for restaurant in restaurants:
-                print restaurant.name
-                output += restaurant.name
-                output += "<br>"
-                output += "<a href='#'>Edit</a><br>"
-                output += "<a href='#'>Delete</a><br>"
-                output += "<br>"
-
-            output += "</body></html>"
-            self.wfile.write(output)
-    # End Clone
-
-            print 'New restaurant, "%s", added to database' % restaurantName[0]
-            return
         except:
             raise
 
