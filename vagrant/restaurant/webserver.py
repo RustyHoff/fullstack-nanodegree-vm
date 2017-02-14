@@ -24,11 +24,14 @@ class webserverHanlder(BaseHTTPRequestHandler):
 
                 for restaurant in restaurants:
                     print restaurant.name
-                    output += "<h1>" + restaurant.name + "</h1>\n"
+                    output += restaurant.name
+                    output += "<br>"
+                    output += "<a href='#'>Edit</a><br>"
+                    output += "<a href='#'>Delete</a><br>"
+                    output += "<br>"
 
                 output += "</body></html>"
                 self.wfile.write(output)
-                print restaurant.name
                 return
 
         except IOError:
@@ -44,7 +47,7 @@ def main():
         server.serve_forever()
 
     except KeyboardInterrupt:
-        print "\n^C entered, stopping web server..."
+        print " entered, stopping web server..."
         server.socket.close()
 
 
