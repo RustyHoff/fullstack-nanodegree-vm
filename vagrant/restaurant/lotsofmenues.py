@@ -164,7 +164,7 @@ session.commit()
 
 
 # Menu for Thyme for that
-restaurant1 = Restaurant(name="Thyme for That Vegetarian Cuisine ")
+restaurant1 = Restaurant(name="Thyme for That Vegetarian Cuisine")
 
 session.add(restaurant1)
 session.commit()
@@ -208,7 +208,7 @@ session.commit()
 
 
 # Menu for Tony's Bistro
-restaurant1 = Restaurant(name="Tony\'s Bistro ")
+restaurant1 = Restaurant(name="Tony\'s Bistro")
 
 session.add(restaurant1)
 session.commit()
@@ -284,7 +284,7 @@ session.commit()
 
 
 # Menu for Auntie Ann's
-restaurant1 = Restaurant(name="Auntie Ann\'s Diner' ")
+restaurant1 = Restaurant(name="Auntie Ann\'s Diner")
 
 session.add(restaurant1)
 session.commit()
@@ -334,7 +334,7 @@ session.commit()
 
 
 # Menu for Cocina Y Amor
-restaurant1 = Restaurant(name="Cocina Y Amor ")
+restaurant1 = Restaurant(name="Cocina Y Amor")
 
 session.add(restaurant1)
 session.commit()
