@@ -32,6 +32,7 @@ class webserverHanlder(BaseHTTPRequestHandler):
                     output += "<br>"
 
                 output += "</body></html>"
+                print "\n"
                 self.wfile.write(output)
                 return
 
@@ -45,8 +46,7 @@ class webserverHanlder(BaseHTTPRequestHandler):
                 output += '''<form method='POST' enctype='multipart/form-data' action='/restaurants/new'><h2>Create a New Restaurant</h2><input name="newRestaurant" type="text" placeholder="Restaurant Name"><input type="submit" value="Create"></form>'''
                 output += "</head></body>"
 
-
-                print "Navigated to Add Restaurant Page"
+                print "Navigated to Add Restaurant Page\n"
                 self.wfile.write(output)
                 return
 
@@ -66,13 +66,13 @@ class webserverHanlder(BaseHTTPRequestHandler):
 
                 session.add(addRestaurant)
                 session.commit()
-                print "Adding Restaurant..."
+                print "Adding Restaurant...\n"
 
                 self.send_response(301)
                 self.send_header('Content-type', 'text/html')
                 self.send_header('Location', '/restaurants')
                 self.end_headers()
-                print 'New restaurant, "%s", added to database!' % restaurantName[0]
+                print 'New restaurant, "%s", added to database!\n' % restaurantName[0]
 
         except:
             raise
