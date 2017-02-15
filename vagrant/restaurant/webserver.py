@@ -13,7 +13,7 @@ session = DBSession()
 class webserverHanlder(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
-            if self.path.endswith("/restaurants") or self.path.endswith("/restaurants/"):
+            if self.path.endswith("/restaurants"):
                 restaurants = session.query(Restaurant).all()
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
@@ -27,7 +27,7 @@ class webserverHanlder(BaseHTTPRequestHandler):
                     print restaurant.name
                     output += restaurant.name
                     output += "<br>"
-                    output += "<a href='#'>Edit</a><br>"
+                    output += "<a href='restaurants/%s/edit'>Edit</a><br>" % restaurant.id
                     output += "<a href='#'>Delete</a><br>"
                     output += "<br>"
 
@@ -36,7 +36,7 @@ class webserverHanlder(BaseHTTPRequestHandler):
                 self.wfile.write(output)
                 return
 
-            if self.path.endswith("/restaurants/new") or self.path.endswith("/restaurants/new/"):
+            if self.path.endswith("/restaurants/new"):
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
@@ -46,17 +46,36 @@ class webserverHanlder(BaseHTTPRequestHandler):
                 output += '''<form method='POST' enctype='multipart/form-data' action='/restaurants/new'><h2>Create a New Restaurant</h2><input name="newRestaurant" type="text" placeholder="Restaurant Name"><input type="submit" value="Create"></form>'''
                 output += "</head></body>"
 
-                print "Navigated to Add Restaurant Page\n"
+                print "Navigated to *ADD* Restaurant Page\n"
                 self.wfile.write(output)
                 return
 
+            if self.path.endswith("/edit"):
+                restaurantIDPath = self.path.split("/")[2]
+                myRestaurantQuery = session.query(Restaurant).filter_by(id=restaurantIDPath).one()
+                if myRestaurantQuery:
+                    self.send_response(200)
+                    self.send_header('Content-type', 'text/html')
+                    self.end_headers()
+                    output = "<html><body>"
+                    output += "<h1>"
+                    output += myRestaurantQuery.name
+                    output += "</h1>"
+                    output += "<form method='POST' enctype='multipart/form-data' action = '/restaurants/%s/edit' >" % restaurantIDPath
+                    output += '''<input name = 'newRestaurantName' type='text' placeholder = "%s" >''' % myRestaurantQuery.name
+                    output += "<input type = 'submit' value = 'Rename'>"
+                    output += "</form>"
+                    output += "</body></html>"
+
+                    print "Navigated to *EDIT* Restaurant Page\n"
+                    self.wfile.write(output)
 
         except IOError:
             self.send_error(404, "File Not Found %s" % self.path)
 
     def do_POST(self):
         try:
-            if self.path.endswith("/restaurants/new") or self.path.endswith("/restaurants/new/"):
+            if self.path.endswith("/restaurants/new"):
                 ctype, pdict = cgi.parse_header(
                     self.headers.getheader('content-type'))
                 if ctype == 'multipart/form-data':
@@ -74,8 +93,29 @@ class webserverHanlder(BaseHTTPRequestHandler):
                 self.end_headers()
                 print 'New restaurant, "%s", added to database!\n' % restaurantName[0]
 
+            if self.path.endswith("/edit"):
+                ctype, pdict = cgi.parse_header(
+                    self.headers.getheader('content-type'))
+                if ctype == 'multipart/form-data':
+                    fields = cgi.parse_multipart(self.rfile, pdict)
+                    messagecontent = fields.get('newRestaurantName')
+                    restaurantIDPath = self.path.split("/")[2]
+
+                    myRestaurantQuery = session.query(Restaurant).filter_by(
+                        id=restaurantIDPath).one()
+                    if myRestaurantQuery != []:
+                        myRestaurantQuery.name = messagecontent[0]
+                        session.add(myRestaurantQuery)
+                        session.commit()
+                        print "Renaming Restaurant...\n"
+                        self.send_response(301)
+                        self.send_header('Content-type', 'text/html')
+                        self.send_header('Location', '/restaurants')
+                        self.end_headers()
+                        print 'Updated name, "%s", on the database!\n' % messagecontent[0]
+
         except:
-            raise
+            pass
 
 
 def main():
