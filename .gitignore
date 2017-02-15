@@ -1,5 +1,5 @@
 ## Vagrant Ignore ##
-vagrant\.vagrant\machines\default\virtualbox\*
+.vagrant
 
 
 ## Python Ignore ##
