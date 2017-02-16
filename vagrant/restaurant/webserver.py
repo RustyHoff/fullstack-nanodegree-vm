@@ -28,7 +28,7 @@ class webserverHanlder(BaseHTTPRequestHandler):
                     output += restaurant.name
                     output += "<br>"
                     output += "<a href='restaurants/%s/edit'>Edit</a><br>" % restaurant.id
-                    output += "<a href='#'>Delete</a><br>"
+                    output += "<a href='restaurants/%s/delete'>Delete</a><br>" % restaurant.id
                     output += "<br>"
 
                 output += "</body></html>"
@@ -68,6 +68,25 @@ class webserverHanlder(BaseHTTPRequestHandler):
                     output += "</body></html>"
 
                     print "Navigated to *EDIT* Restaurant Page\n"
+                    self.wfile.write(output)
+
+            if self.path.endswith("/delete"):
+                restaurantIDPath = self.path.split("/")[2]
+                myRestaurantQuery = session.query(Restaurant).filter_by(id=restaurantIDPath).one()
+                if myRestaurantQuery:
+                    self.send_response(200)
+                    self.send_header('Content-type', 'text/html')
+                    self.end_headers()
+                    output = "<html><body>"
+                    output += "<h1>"
+                    output += "Delete " + myRestaurantQuery.name + "?"
+                    output += "</h1>"
+                    output += "<form method='POST' enctype='multipart/form-data' action = '/restaurants/%s/delete' >" % restaurantIDPath
+                    output += "<input type = 'submit' value = 'Delete'>"
+                    output += "</form>"
+                    output += "</body></html>"
+
+                    print "Navigated to *DELETE* Restaurant Page\n"
                     self.wfile.write(output)
 
         except IOError:
@@ -113,6 +132,21 @@ class webserverHanlder(BaseHTTPRequestHandler):
                         self.send_header('Location', '/restaurants')
                         self.end_headers()
                         print 'Updated name, "%s", on the database!\n' % messagecontent[0]
+
+            if self.path.endswith("/delete"):
+                restaurantIDPath = self.path.split("/")[2]
+                myRestaurantQuery = session.query(Restaurant).filter_by(
+                    id=restaurantIDPath).one()
+
+                if myRestaurantQuery != []:
+                    session.delete(myRestaurantQuery)
+                    session.commit()
+                    print "Delete Restaurant...\n"
+                    self.send_response(301)
+                    self.send_header('Content-type', 'text/html')
+                    self.send_header('Location', '/restaurants')
+                    self.end_headers()
+                    print 'Deleted item "%s" from the database!\n' % myRestaurantQuery.name
 
         except:
             pass
