@@ -56,7 +56,7 @@ def deleteMenuItem(restaurant_id, menu_id):
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         return render_template(
-            'deletemenuitem.html', restaurant_id=itemToDelete.restaurant_id, menu_id =menu_id, itemToDelete = itemToDelete)
+            'deletemenuitem.html', restaurant_id=itemToDelete.restaurant_id, itemToDelete = itemToDelete)
 
 if __name__ == '__main__':
     app.debug = True
