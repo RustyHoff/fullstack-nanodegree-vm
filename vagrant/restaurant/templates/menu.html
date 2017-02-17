@@ -5,9 +5,9 @@
 
     {% for i in items %}
     <div>
-      <p>{{i.name}}</p>
-      <p>{{i.description}}</p>
-      <p>{{i.price}}</p>
+      <h3 style="margin-bottom: 0;">{{i.name}}</h3>
+      <p style="margin: 5px 0px 5px;">{{i.description}}</p>
+      <p style="margin-top: 0; margin-bottom: 5px">{{i.price}}</p>
     </div>
     <a href='{{ url_for('editMenuItem', restaurant_id = restaurant.id, menu_id = i.id) }}'>Edit</a>
     <a href='{{ url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id = i.id) }}'>Delete</a>
