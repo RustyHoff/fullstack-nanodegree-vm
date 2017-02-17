@@ -3,6 +3,8 @@
 
     <h1>{{restaurant.name}}</h1>
 
+    <a href="{{url_for('newMenuItem', restaurant_id = restaurant.id)}}">Add a New Item</a>
+
     {% for i in items %}
     <div>
       <h3 style="margin-bottom: 0;">{{i.name}}</h3>
