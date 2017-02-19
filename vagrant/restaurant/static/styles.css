@@ -41,7 +41,8 @@ input {
 }
 
 .pane {
-    width: 40%;
+    min-width: 40%;
+    max-width: 600px;
     margin: 0 auto;
     position: relative;
     border: 2px solid;
