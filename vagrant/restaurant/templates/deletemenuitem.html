@@ -1,13 +1,22 @@
-<html><body>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+  </head>
+  <body>
+    <div class="pane">
+      <h1 class="header"> Are you sure you want to delete {{itemToDelete.name}}?</h1>
+      <div class="confirm" style="margin-top: 10px;">
+        <form action="{{ url_for('deleteMenuItem',restaurant_id = itemToDelete.restaurant_id, menu_id=itemToDelete.id)}}" method = 'POST'>
 
-  <h1> Are you sure you want to delete {{itemToDelete.name}}?</h1>
+          <input type='submit', value = 'Delete'>
 
-  <form action="{{ url_for('deleteMenuItem',restaurant_id = itemToDelete.restaurant_id, menu_id=itemToDelete.id)}}" method = 'POST'>
+        </form>
 
-    <input type='submit', value = 'Delete'>
-
-  </form>
-
-  <a href = "{{ url_for('restaurantMenu', restaurant_id = restaurant_id)}}"> Cancel </a>
-
-</body></html>
+        <a href = "{{ url_for('restaurantMenu', restaurant_id = restaurant_id)}}"> Cancel </a>
+      </div>
+    </div>
+  </body>
+</html>

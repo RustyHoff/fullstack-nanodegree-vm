@@ -1,17 +1,24 @@
-
+<!DOCTYPE html>
 <html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+  </head>
   <body>
-    <h1> New Menu Item </h1>
+    <div class="pane">
+      <h1 class="header"> New Menu Item </h1>
 
-    <form action="{{url_for('newMenuItem', restaurant_id = restaurant_id )}}" method = 'POST'>
+      <form action="{{url_for('newMenuItem', restaurant_id = restaurant_id )}}" method = 'POST'>
+        <div class="confirm">
+          <h2  style="margin: 5px 0px 5px;">Name:</h2>
 
-      <p>Name:</p>
+          <input type='text' size='30' name='name'>
 
-      <input type='text' size='30' name='name'>
+          <input type='submit' value='Create'>
+        </div>
 
-      <input type='submit' value='Create'>
-
-    </form>
-
+      </form>
+    </div>
   </body>
 </html>
