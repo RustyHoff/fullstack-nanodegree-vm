@@ -24,8 +24,8 @@
       <a href="{{url_for('newMenuItem', restaurant_id = restaurant.id)}}">Create New Menu Item</a>
       {% for i in items %}
       <div class="nameAndPrice">
-        <span class="name">
-          <p>{{i.name}}</p>
+        <span>
+          <p class="name">{{i.name}}</p>
         </span>
         <span class="price">
           <p>{{i.price}}</p>

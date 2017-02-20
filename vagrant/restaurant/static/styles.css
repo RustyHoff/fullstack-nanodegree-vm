@@ -62,7 +62,6 @@ input {
     display: inline-block;
     float: left;
     text-decoration: underline;
-    text-decoration-color: #999;
 }
 
 .price, .description {
