@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include '_head.html' %}
+    <title>Restaurants</title>
+  </head>
+  <body>
+    <h1>Restaurants</h1>
+    <a href="#">Add new restaurant</a>
+    <br><br>
+    {% for i in restaurants %}
+    <h3>{{i.name}}</h3>
+    <a href="#">Edit</a>
+    <a href="#">Delete</a>
+    <br><br>
+    {% endfor %}
+  </body>
+</html>

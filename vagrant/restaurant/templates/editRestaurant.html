@@ -2,13 +2,13 @@
 <html>
   <head>
       {% include '_head.html' %}
-      <title>{{item.name}}</title>
+      <title>{{restaurant.name}}</title>
   </head>
   <body>
-    <h1>Edit Menu Item: {{item.name}}</h1>
+    <h1>Edit Restaurant: {{restaurant.name}}</h1>
     <form action="#" method="POST">
       <h3>Name:</h3>
-      <input type="text" name="name" placeholder="{{item.name}}">
+      <input type="text" name="name" placeholder="{{restaurant.name}}">
       <input type="submit" value="Edit">
       <a href="#">Cancel</a>
     </form>

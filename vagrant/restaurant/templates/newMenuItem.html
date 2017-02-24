@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      {% include '_head.html' %}
+      <title>Create New Menu Item</title>
+  </head>
+  <body>
+    <h1>New Menu Item</h1>
+    <form action="#" method="POST">
+      <input type="reset" value="Reset">
+      <br><br>
+      <h3>Name</h3>
+        <input type="text" name="name" placeholder="Item name" required>
+      <br>
+      <h3>Description</h3>
+        <input type="text" name="description" placeholder="Item info" required>
+      <br>
+      <h3>Price</h3>
+        <input type="text" name="price" placeholder="Item price ($x.xx)"required>
+      <br>
+      <h3>Course</h3>
+        <span><input type="radio" name="course" value="Appetizer" checked> Appetizer</span><br>
+        <span><input type="radio" name="course" value="Entree"> Entree</span><br>
+        <span><input type="radio" name="course" value="Dessert"> Dessert</span><br>
+        <span><input type="radio" name="course" value="Beverage"> Beverage</span><br>
+      <br>
+      <input type="submit" value="Create">
+      <a href="#">Cancel</a>
+    </form>
+  </body>
+</html>

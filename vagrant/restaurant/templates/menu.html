@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include '_head.html' %}
+    <title>{{restaurant.name}}</title>
+  </head>
+  <body>
+    <h1>{{restaurant.name}}</h1>
+    <a href="#">Add new menu item</a>
+    <br><br>
+    {% for i in items %}
+    <h3>{{i.name}}</h3>
+    <p>{{i.price}}</p>
+    <p>{{i.description}}</p>
+    <a href="#">Edit</a>
+    <a href="#">Delete</a>
+    <br><br>
+    {% endfor %}
+  </body>
+</html>
