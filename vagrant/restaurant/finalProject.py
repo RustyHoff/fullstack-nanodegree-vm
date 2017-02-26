@@ -65,11 +65,14 @@ def editRestaurant(restaurant_id):
 
 @app.route('/restaurant/<int:restaurant_id>/delete/', methods=['GET','POST'])
 def deleteRestaurant(restaurant_id):
-    #TODO: if restaurant gets delted, delete all menu items associated with restaurant
+    # DONE #
     #return "This page will be for deleting restaurant %s." % restaurant_id
     restaurantToDelete = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    allMenuItems = session.query(MenuItem).filter_by(restaurant_id = restaurant_id)
     if request.method == 'POST':
         session.delete(restaurantToDelete)
+        for everything in allMenuItems:
+            session.delete(everything)
         session.commit()
         return redirect(url_for('showRestaurants'))
     else:
@@ -78,7 +81,6 @@ def deleteRestaurant(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/')
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def showMenu(restaurant_id):
-    #TODO: add code to account for no menu items on menu.
     #return "This page is the menu for restaurant %s." % restaurant_id
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     items = session.query(MenuItem).filter_by(restaurant_id = restaurant_id)

@@ -6,16 +6,19 @@
   </head>
   <body>
     <h1>{{restaurant.name}}</h1>
-    <small><a href="{{url_for('showRestaurants')}}"><< Return to Restaurants</a></small><br>
+    <small><a href="{{url_for('showRestaurants')}}"><< Return to Restaurants</a></small><br><br>
     <a href="{{url_for('newMenuItem', restaurant_id = restaurant.id)}}">Add new menu item</a>
     <br><br>
     {% for item in items %}
-    <h3>{{item.name}}</h3>
-    <p>{{item.price}}</p>
-    <p>{{item.description}}</p>
-    <a href="{{url_for('editMenuItem', menu_id = item.id, restaurant_id = restaurant.id)}}">Edit</a>
-    <a href="{{url_for('deleteMenuItem', menu_id = item.id, restaurant_id = restaurant.id)}}">Delete</a>
-    <br><br>
+      <h3>{{item.name}}</h3>
+      <p>{{item.price}}</p>
+      <p>{{item.description}}</p>
+      <a href="{{url_for('editMenuItem', menu_id = item.id, restaurant_id = restaurant.id)}}">Edit</a>
+      <a href="{{url_for('deleteMenuItem', menu_id = item.id, restaurant_id = restaurant.id)}}">Delete</a>
+      <br><br>
+    {% else %}
+      <p>There are currently no menu items for restaurant {{restaurant.name}}.</p>
+      <p>Please add a new item by clicking on the option above.</p>
     {% endfor %}
   </body>
 </html>
