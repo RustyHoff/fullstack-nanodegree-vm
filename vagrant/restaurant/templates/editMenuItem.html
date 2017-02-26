@@ -6,11 +6,24 @@
   </head>
   <body>
     <h1>Edit Menu Item: {{item.name}}</h1>
-    <form action="#" method="POST">
-      <h3>Name:</h3>
-      <input type="text" name="name" placeholder="{{item.name}}">
+    <form action="{{url_for('editMenuItem', menu_id = item.id, restaurant_id = restaurant.id)}}" method="POST">
+      <h3>Name</h3>
+        <input type="text" name="name" placeholder="Item name" value="{{item.name}}"required>
+      <br>
+      <h3>Description</h3>
+        <input type="text" name="description" placeholder="Item info" value="{{item.description}}"required>
+      <br>
+      <h3>Price</h3>
+        <input type="text" name="price" placeholder="Item price ($x.xx)" value="{{item.price}}"required>
+      <br>
+      <h3>Course</h3>
+        <span><input type="radio" name="course" value="Appetizer" {% if item.course == "Appetizer" %} checked {% endif %}> Appetizer</span><br>
+        <span><input type="radio" name="course" value="Entree" {% if item.course == "Entree" %} checked {% endif %}> Entree</span><br>
+        <span><input type="radio" name="course" value="Dessert" {% if item.course == "Dessert" %} checked {% endif %}> Dessert</span><br>
+        <span><input type="radio" name="course" value="Beverage" {% if item.course == "Beverage" %} checked {% endif %}> Beverage</span><br>
+      <br>
       <input type="submit" value="Edit">
-      <a href="#">Cancel</a>
+      <a href="{{url_for('showMenu', restaurant_id = restaurant.id)}}">Cancel</a>
     </form>
   </body>
 </html>

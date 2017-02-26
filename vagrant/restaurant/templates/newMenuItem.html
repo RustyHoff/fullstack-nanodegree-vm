@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>New Menu Item</h1>
-    <form action="#" method="POST">
+    <form action="{{url_for('newMenuItem', restaurant_id = restaurant_id)}}" method="POST">
       <input type="reset" value="Reset">
       <br><br>
       <h3>Name</h3>
@@ -25,7 +25,7 @@
         <span><input type="radio" name="course" value="Beverage"> Beverage</span><br>
       <br>
       <input type="submit" value="Create">
-      <a href="#">Cancel</a>
+      <a href="{{url_for('showMenu', restaurant_id = restaurant_id)}}">Cancel</a>
     </form>
   </body>
 </html>
